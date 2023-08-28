@@ -1,12 +1,6 @@
-import {
-  View,
-  ActivityIndicator,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
-import {useEffect, useRef, useState} from 'react';
-import {Camera, useCameraDevices} from 'react-native-vision-camera';
+import { View, ActivityIndicator, StyleSheet, TouchableOpacity, Image, } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { Camera, useCameraDevices } from 'react-native-vision-camera';
 
 const App = () => {
   const devices = useCameraDevices();
@@ -39,9 +33,9 @@ const App = () => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       {takePhotoClicked ? (
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <Camera
             ref={camera}
             style={StyleSheet.absoluteFill}
@@ -65,11 +59,11 @@ const App = () => {
             }}></TouchableOpacity>
         </View>
       ) : (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           {imageData !== '' && (
             <Image
-              source={{uri: 'file://' + imageData}}
-              style={{width: '90%', height: 200}}
+              source={{ uri: 'file://' + imageData }}
+              style={{ width: '90%', height: '85%' }}
             />
           )}
           <TouchableOpacity
