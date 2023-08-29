@@ -1,88 +1,32 @@
-import { View, ActivityIndicator, StyleSheet, TouchableOpacity, Image, } from 'react-native';
-import { useEffect, useRef, useState } from 'react';
-import { Camera, useCameraDevices } from 'react-native-vision-camera';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
-const App = () => {
-  const devices = useCameraDevices();
-  const device = devices.back;
-  const camera = useRef(null);
-  const [imageData, setImageData] = useState('');
-  const [takePhotoClicked, setTakePhotoClicked] = useState(false);
-  useEffect(() => {
-    checkPermission();
-  }, []);
+import AppContacts from './src/pages/AppContacts/';
+import Contacts from './src/pages/Contacts/'
+import Information from './src/pages/Information/'
 
-  const checkPermission = async () => {
-    const newCameraPermission = await Camera.requestCameraPermission();
-    const newMicrofonePermission = await Camera.requestMicrophonePermission();
-    console.log(newCameraPermission);
-  };
+const Stack = createStackNavigator()
+const Tab = createBottomTabNavigator()
 
-  if (device == null) return <ActivityIndicator />;
+function Tabs() {
+    return (
+        <Tab.Navigator>
+            <Tab.Screen name="AppContacts" component={AppContacts} />
+            <Tab.Screen name="Contacts" component={Contacts} />
+        </Tab.Navigator>
+    )
+}
 
-  const takePicture = async () => {
-    if (camera != null) {
-      const photo = await camera.current.takePhoto();
+export default function App() {
+    return (
+        <NavigationContainer>
+            <Stack.Navigator>
+                <Stack.Screen name="AppContacts" component={Tabs} />
+                <Stack.Screen name="Information" component={Information} />
+            </Stack.Navigator>
+        </NavigationContainer>
+    )
+}
 
-      setImageData(photo.path);
-
-      setTakePhotoClicked(false);
-
-      console.log(photo.path);
-    }
-  };
-
-  return (
-    <View style={{ flex: 1 }}>
-      {takePhotoClicked ? (
-        <View style={{ flex: 1 }}>
-          <Camera
-            ref={camera}
-            style={StyleSheet.absoluteFill}
-            device={device}
-            isActive={true}
-            photo
-          />
-
-          <TouchableOpacity
-            style={{
-              width: 60,
-              height: 60,
-              borderRadius: 30,
-              backgroundColor: '#ff0037',
-              position: 'absolute',
-              bottom: 50,
-              alignSelf: 'center',
-            }}
-            onPress={() => {
-              takePicture();
-            }}></TouchableOpacity>
-        </View>
-      ) : (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          {imageData !== '' && (
-            <Image
-              source={{ uri: 'file://' + imageData }}
-              style={{ width: '90%', height: '85%' }}
-            />
-          )}
-          <TouchableOpacity
-            style={{
-              width: '90%',
-              height: 50,
-              borderWidth: 1,
-              alignSelf: 'center',
-              borderRadius: 10,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            onPress={() => {
-              setTakePhotoClicked(true);
-            }}></TouchableOpacity>
-        </View>
-      )}
-    </View>
-  );
-};
-
-export default App;
