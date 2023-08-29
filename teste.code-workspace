@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "teste",
+			"path": "."
+		},
+		{
+			"name": "constants",
+			"path": "../paraver/constants"
+		}
+	],
+	"settings": {}
+}
