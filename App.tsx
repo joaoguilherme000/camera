@@ -1,22 +1,19 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import CameraComponent from './src/components/CameraComponent';
 import HomeComponent from './src/components/HomeComponent'
 
-const Tab = createBottomTabNavigator();
-
-function MyTabs() {
-    return (
-        <Tab.Navigator>
-            <Tab.Screen name="Home" component={HomeComponent} />
-            <Tab.Screen name="Settings" component={CameraComponent} />
-        </Tab.Navigator>
-    );
-}
+const Stack = createStackNavigator();
 
 export default function App() {
     return (
-        <MyTabs />
+        <NavigationContainer>
+            <Stack.Navigator>
+                <Stack.Screen name="Home" component={HomeComponent} />
+                <Stack.Screen name="Camera" component={CameraComponent} />
+            </Stack.Navigator>
+        </NavigationContainer>
     );
 };
